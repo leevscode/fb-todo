@@ -25,7 +25,11 @@ const Form = ({ todoData, setTodoData }) => {
 
   return (
     <div>
-      <form style={{ display: "flex" }} onSubmit={handleSubmit}>
+      <form
+        className="flex pt-2"
+        style={{ display: "flex" }}
+        onSubmit={handleSubmit}
+      >
         <input
           type="text"
           name="value"
@@ -33,8 +37,14 @@ const Form = ({ todoData, setTodoData }) => {
           placeholder="할일을 입력해주세요."
           value={value}
           onChange={handleChange}
+          className="w-full px-3 py-2 mr-4 text-gray-500 border rounded shadow"
         />
-        <input type="submit" style={{ flex: "1" }} value="입력" />
+        <input
+          type="submit"
+          style={{ flex: "1" }}
+          value="입력"
+          className="flex items-center justify-between w-full px-4 py-1 text-gray-600 bg-gray-100 border rounded"
+        />
       </form>
     </div>
   );
