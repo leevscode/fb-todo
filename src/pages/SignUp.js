@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import SingUpDiv from "../style/UserCSS";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
+// firebase 연동
+import firebase from "../firebase";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -8,11 +10,22 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
   const [pwConfirm, setPwConfirm] = useState("");
-
-  const handleSignUp = e => {
+  const handleSignUp = async e => {
     e.preventDefault();
-    // firebase 에 회원가입하기
+    try {
+      // firebase 에 회원가입 하기
+      let createUser = await firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, pw);
+      await createUser.user.updateProfile({
+        name: nickName,
+      });
+      console.log("등록된 정보 : ", createUser.user);
+    } catch (err) {
+      console.log(err);
+    }
   };
+
   return (
     <div className="p-6 mt-5 shadow rounded-md bg-white">
       <h2>Singup</h2>
@@ -59,7 +72,7 @@ const SignUp = () => {
           <div className="flex justify-center gap-5 w-full">
             <button
               className="border rounded px-3 py-2 shadow"
-              onChange={e => handleSignUp(e.target.value)}
+              onClick={e => handleSignUp(e)}
             >
               회원가입
             </button>
