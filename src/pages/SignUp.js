@@ -17,12 +17,24 @@ const SignUp = () => {
       let createUser = await firebase
         .auth()
         .createUserWithEmailAndPassword(email, pw);
+      // 회원 가입이 성공시 사용자 이름을 업데이트
       await createUser.user.updateProfile({
         name: nickName,
       });
+      navigate("/login");
+
       console.log("등록된 정보 : ", createUser.user);
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      // 회원가입 시 에러 처리
+      if (error.code == "auth/email-already-in-use") {
+        alert("The email address is already in use");
+      } else if (error.code == "auth/invalid-email") {
+        alert("The email address is not valid.");
+      } else if (error.code == "auth/operation-not-allowed") {
+        alert("Operation not allowed.");
+      } else if (error.code == "auth/weak-password") {
+        alert("The password is too weak.");
+      }
     }
   };
 
