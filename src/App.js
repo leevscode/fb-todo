@@ -15,7 +15,7 @@ function App() {
   // 추후에 Redux/Recoil state 로 관리 필요
   const [fbName, setFBName] = useState("");
   const [fbEmail, setFBEmail] = useState("");
-  const [fbUid, setFBuid] = useState("");
+  const [fbUid, setFBUid] = useState("");
 
   return (
     <div className="w-screen h-screen bg-blue-300 overflow-x-hidden">
@@ -25,7 +25,7 @@ function App() {
       fbUid={fbUid} 
       setFBName={setFBName}
       setFBEmail={setFBEmail}
-      setFBuid={setFBuid}
+      setFBUid={setFBUid}
       />
       <div className="container mx-auto h-full">
         <Routes>
@@ -39,7 +39,7 @@ function App() {
               <Login
                 setFBName={setFBName}
                 setFBEmail={setFBEmail}
-                setFBuid={setFBuid}
+                setFBUid={setFBUid}
               />
             }
           />
@@ -50,7 +50,7 @@ function App() {
            fbUid={fbUid} 
            setFBName={setFBName}
            setFBEmail={setFBEmail}
-           setFBuid={setFBuid}/>} />
+           setFBuid={setFBUid}/>} />
           <Route path="/todo" element={<Todo fbName={fbName} fbEmail={fbEmail} fbUid={fbUid}/>} />
           <Route path="*" element={<NotFound />} />
         </Routes>

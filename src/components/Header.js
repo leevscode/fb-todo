@@ -8,7 +8,7 @@ const Header = ({
   fbUid,
   setFBName,
   setFBEmail,
-  setFBuid,
+  setFBUid,
 }) => {
   const navigator = useNavigate();
   // fb 로그아웃
@@ -17,7 +17,7 @@ const Header = ({
     console.log("로그아웃");
     setFBName("");
     setFBEmail("");
-    setFBuid("");
+    setFBUid("");
     navigator("/");
   };
   return (

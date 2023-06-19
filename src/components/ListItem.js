@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { patchCompletedTodo, deleteTodo } from "../axios";
 
 const ListItem = ({ item, todoData, setTodoData }) => {
   // console.log("ListItem 랜더링", item);
@@ -24,9 +25,11 @@ const ListItem = ({ item, todoData, setTodoData }) => {
     const newTodoData = todoData.filter(item => item.id !== _id);
     setTodoData(newTodoData);
     // 로컬스토리지 저장
-    localStorage.setItem("fbTodoData", JSON.stringify(newTodoData));
+    // localStorage.setItem("fbTodoData", JSON.stringify(newTodoData));
     // axios delete 호출 fbtodolist 삭제하기
+    deleteTodo(_id);
   };
+
   const handleEditClick = () => {
     setIsEdit(true);
   };
@@ -46,26 +49,28 @@ const ListItem = ({ item, todoData, setTodoData }) => {
     });
     setTodoData(newTodoData);
     // 로컬스토리지 저장
-    localStorage.setItem("fbTodoData", JSON.stringify(newTodoData));
+    // localStorage.setItem("fbTodoData", JSON.stringify(newTodoData));
     // axios patch/put 호출 fbtodolist 수정하기
     setIsEdit(false);
   };
 
   const handleCompleteChange = _id => {
-    // 중요한 것은 음.. id에 해당하는 것만 수정하면 되지 XXX
-    // state 는 항상 새롭게 만든 내용 즉, 배열로 업데이트 해야 한다.
+    // id에 해당하는 것만 수정하면 된다 (X)
+    // state 는 항상 새롭게 만든 내용 즉, 배열로 업데이트 해야 한다
     // 새로운 배열을 만들어서 set 하자.
+
     let newTodoData = todoData.map(item => {
       if (item.id === _id) {
-        // completed 를 갱신함.
+        // completed 를 갱신
         item.completed = !item.completed;
       }
       return item;
     });
     setTodoData(newTodoData);
-    // 로컬스토리지 저장
+    // localStorage 저장
     localStorage.setItem("fbTodoData", JSON.stringify(newTodoData));
     // axios patch/put 호출 fbtodolist 수정하기
+    patchCompletedTodo();
   };
 
   if (isEdit) {
@@ -79,7 +84,7 @@ const ListItem = ({ item, todoData, setTodoData }) => {
             defaultValue={item.title}
             // 개인적으로 좀 더 파악해 보자.
             // value={editTitle}
-            onChange={(handleEditChange)}
+            onChange={handleEditChange}
           />
         </div>
         <div className="items-center">
